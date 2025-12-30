@@ -1,5 +1,6 @@
 import { server } from "./index.js";
 import { Connectmongoos } from "./src/config/mongoos.connection.js";
+// import {testRedis} from "./src/Users/user.controller.js"
 
 const PORT=process.env.PORT;
 
