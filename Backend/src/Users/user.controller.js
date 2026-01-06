@@ -24,7 +24,7 @@ export default class UserController {
                 return res.status(400).json({ message: "Email not verified" });
             }
 
-            const regi = await this._userrepository.Register(data);
+            await this._userrepository.Register(data);
             res.status(201).json({ "message": "user is Registered.." })
         } catch (error) {
             console.log("Signup Error:", error.message);
