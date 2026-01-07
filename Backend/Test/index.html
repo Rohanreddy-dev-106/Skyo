@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Bookings - Dashboard</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+
+            min-height: 100vh;
+            padding: 20px;
+            color: #1a202c;
+        }
+
+        .header {
+            max-width: 1400px;
+            margin: 0 auto 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            color: rgb(10, 10, 10);
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.1rem;
+        }
+
+        .loader {
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        .loader-spinner {
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loader-text {
+            color: white;
+            font-size: 1.1rem;
+        }
+
+        .flights-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 24px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .flight-card {
+            background: white;
+            border-radius: 16px;
+            padding: 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .flight-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            color: white;
+        }
+
+        .flight-card h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .airline-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+
+        .card-body {
+            padding: 24px;
+        }
+
+        .route-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .location {
+            flex: 1;
+            text-align: center;
+        }
+
+        .location-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: #718096;
+            font-weight: 600;
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .location-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #2d3748;
+        }
+
+        .route-arrow {
+            flex: 0 0 60px;
+            text-align: center;
+            position: relative;
+        }
+
+        .route-arrow::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: #e2e8f0;
+            z-index: 0;
+        }
+
+        .plane-icon {
+            position: relative;
+            z-index: 1;
+            background: white;
+            padding: 0 8px;
+            font-size: 1.5rem;
+        }
+
+        .time-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            padding: 20px;
+            background: #f7fafc;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        .time-block {
+            text-align: center;
+        }
+
+        .time-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: #718096;
+            font-weight: 600;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        .time-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .date-value {
+            font-size: 0.85rem;
+            color: #718096;
+            margin-top: 2px;
+        }
+
+        .seats-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-radius: 12px;
+        }
+
+        .seats-label {
+            font-size: 0.9rem;
+            color: #4a5568;
+            font-weight: 600;
+        }
+
+        .seats-count {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .error-message {
+            text-align: center;
+            color: white;
+            font-size: 1.2rem;
+            margin-top: 100px;
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 500px;
+            margin: 100px auto;
+            backdrop-filter: blur(10px);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .flights-container {
+                grid-template-columns: 1fr;
+            }
+
+            .route-section {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .route-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1> Flight Bookings</h1>
+        <p>Find and book your perfect flight</p>
+    </div>
+
+    <div class="loader" id="loader">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">Loading available flights...</div>
+    </div>
+
+    <div class="flights-container" id="flightsContainer" style="display: none;">
+        <!-- Flight cards will be inserted here -->
+    </div>
+
+    <script>
+        function formatDateTime(dateString) {
+            const date = new Date(dateString);
+            const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: true };
+            const dateOptions = { month: 'short', day: 'numeric', year: 'numeric' };
+            
+            return {
+                time: date.toLocaleTimeString('en-US', timeOptions),
+                date: date.toLocaleDateString('en-US', dateOptions)
+            };
+        }
+
+        async function fetchFlights() {
+            const loader = document.getElementById('loader');
+            const container = document.getElementById('flightsContainer');
+
+            try {
+                const response = await fetch('http://localhost:4506/api/flights/read');
+                if (!response.ok) throw new Error("Network response was not ok");
+
+                const flights = await response.json();
+
+                if (flights.length === 0) {
+                    loader.innerHTML = '<div class="error-message">No flights available at the moment.</div>';
+                    return;
+                }
+
+                loader.style.display = 'none';
+                container.style.display = 'grid';
+
+                flights.forEach(flight => {
+                    const departure = formatDateTime(flight.departureTime);
+                    const arrival = formatDateTime(flight.aravileTime);
+
+                    const card = document.createElement('div');
+                    card.classList.add('flight-card');
+
+                    card.innerHTML = `
+                        <div class="card-header">
+                            <h2>${flight.Flightname}</h2>
+                            <div class="airline-badge">${flight.airline}</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="route-section">
+                                <div class="location">
+                                    <div class="location-label">From</div>
+                                    <div class="location-name">${flight.source}</div>
+                                </div>
+                                <div class="route-arrow">
+                                    <span class="plane-icon"> ✈ </span>
+                                </div>
+                                <div class="location">
+                                    <div class="location-label">To</div>
+                                    <div class="location-name">${flight.destination}</div>
+                                </div>
+                            </div>
+                            <div class="time-section">
+                                <div class="time-block">
+                                    <div class="time-label">Departure</div>
+                                    <div class="time-value">${departure.time}</div>
+                                    <div class="date-value">${departure.date}</div>
+                                </div>
+                                <div class="time-block">
+                                    <div class="time-label">Arrival</div>
+                                    <div class="time-value">${arrival.time}</div>
+                                    <div class="date-value">${arrival.date}</div>
+                                </div>
+                            </div>
+                            <div class="seats-section">
+                                <span class="seats-label">Available Seats</span>
+                                <span class="seats-count">${flight.totalseats}</span>
+                            </div>
+                        </div>
+                    `;
+
+                    container.appendChild(card);
+                });
+
+            } catch (err) {
+                loader.innerHTML = `<div class="error-message">Failed to fetch flights: ${err.message}</div>`;
+            }
+        }
+
+        window.onload = fetchFlights;
+    </script>
+
+</body>
+</html>

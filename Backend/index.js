@@ -2,6 +2,7 @@ import express from "express";
 import userrouts from "./src/Users/user.routs.js";
 import FlightRouts from "./src/Flights_Management/flight.routs.js";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -9,6 +10,10 @@ dotenv.config();
 const server=express();
 server.use(express.json())
 server.use(cookieParser())
+server.use(cors({
+    origin: "*" // allow all origins
+}));
+
 
 // server.get("/",(req,res,next)=>res.status(200).send("Server is Created..."))
 server.use("/api/user",userrouts);
