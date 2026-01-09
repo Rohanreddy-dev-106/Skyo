@@ -1,4 +1,5 @@
 import Flightmodel from "./flight.schema.js";
+import seatsSchema from "./seats.schema.js";
 export default class Flight {
     //Private
     async CreateFlight(data) {
@@ -48,11 +49,11 @@ export default class Flight {
     async Search(flight_id = null, flightName = null) {
         try {
             const query = {};
-                if (flight_id) {
-                    query._id = flight_id;
-                } else {
-                    throw new Error("Invalid flight ID");
-                }
+            if (flight_id) {
+                query._id = flight_id;
+            } else {
+                throw new Error("Invalid flight ID");
+            }
             if (flightName) {
                 query.Flightname = flightName;
             }
@@ -69,6 +70,17 @@ export default class Flight {
             return await Flightmodel.findById(flight_id);
         } catch (err) {
             console.log(err.message);
+
+        }
+    }
+    //private
+
+    async AddSets(data) {
+        try {
+            const Sets = new seatsSchema(data);
+            await Sets.save();
+        } catch (error) {
+            console.log(error.message);
 
         }
     }

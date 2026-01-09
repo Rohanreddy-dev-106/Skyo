@@ -35,5 +35,7 @@ FlightRouts.get("/search", (req, res, next) => {
     flight.search(req, res, next);
 });
 
+FlightRouts.post("/seats-add",(req,res,next)=>flight.Add(req,res,next))
+
 
 export default FlightRouts;

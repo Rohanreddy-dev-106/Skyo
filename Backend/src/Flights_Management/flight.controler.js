@@ -94,4 +94,24 @@ export default class FlightController {
         }
     }
 
+    //ADD SEATS
+    async Add(req, res, next) {
+        try {
+            const data = req.body;
+
+            const addsets = await this._Flightrepo.AddSets(data);
+
+            return res.status(201).json({
+                success: true,
+                message: "Seats added successfully",
+                data: addsets
+            });
+
+        } catch (error) {
+            console.log(error.message);
+
+        }
+    }
+
+
 }
