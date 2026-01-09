@@ -48,14 +48,11 @@ export default class Flight {
     async Search(flight_id = null, flightName = null) {
         try {
             const query = {};
-
-            if (flight_id) {
                 if (flight_id) {
                     query._id = flight_id;
                 } else {
                     throw new Error("Invalid flight ID");
                 }
-            }
             if (flightName) {
                 query.Flightname = flightName;
             }
@@ -66,8 +63,6 @@ export default class Flight {
             console.log(err.message);
         }
     }
-
-
     //Private
     async Find(flight_id) {
         try {
