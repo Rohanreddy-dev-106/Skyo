@@ -78,7 +78,7 @@ export default class Flight {
         try {
             const seat = new seatsSchema(data);
             const sid = await seat.save();
-            return sid_id;
+            return sid._id;
         } catch (error) {
             console.log(error.message);
 

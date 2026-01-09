@@ -10,32 +10,38 @@ export default class FlightController {
     // CREATE FLIGHT
     async create(req, res, next) {
         try {
-            const result = await this._Flightrepo.CreateFlight(req.body);
+            const flightData = {
+                ...req.body,
+                Howcreated: req.user.UserID
+            };
+            const result = await this._Flightrepo.CreateFlight(flightData);
             return res.status(201).json(result);
         } catch (err) {
             console.log(err.message);
-
+            return res.status(500).json({ message: "Failed to create flight" });
         }
     }
 
     // UPDATE FLIGHT
     async update(req, res, next) {
         try {
-            const { id } = req.params;  // flight ID from URL
+            const { id } = req.params;
+            
             const data = await this._Flightrepo.Find(id);
 
             if (!data) {
-                return res.status(404).json({ message: "Flight owner not found" });
+                return res.status(404).json({ message: "Flight not found" });
             }
 
             // Ownership check
-            if (data.Howcreated !== req.user.UserID) {
+            if (data.Howcreated.toString() !== req.user.UserID.toString()) {
                 return res.status(403).json({ message: "Not authorized" });
             }
+            
             const result = await this._Flightrepo.UpdateFlight(id, req.body);
 
             if (!result) {
-                return res.status(404).json({ message: "Flight not found" });
+                return res.status(404).json({ message: "Update failed" });
             }
 
             return res.status(200).json(result);
@@ -46,7 +52,6 @@ export default class FlightController {
         }
     }
 
-
     // READ ALL FLIGHTS
     async read(req, res, next) {
         try {
@@ -54,28 +59,37 @@ export default class FlightController {
             return res.status(200).json(flights);
         } catch (err) {
             console.log(err.message);
+            return res.status(500).json({ message: "Failed to read flights" });
         }
     }
 
     // DELETE FLIGHT
     async delete(req, res, next) {
         try {
-            const { id } = req.params;  // flight ID from URL
+            const { id } = req.params;
+            
             const data = await this._Flightrepo.Find(id);
-            // Ownership check
-            if (data.Howcreated !== req.user.UserID) {
-                return res.status(403).json({ message: "Flight owner not found" })
+            
+            if (!data) {
+                return res.status(404).json({ message: "Flight not found" });
             }
+
+            // Ownership check
+            if (data.Howcreated.toString() !== req.user.UserID.toString()) {
+                return res.status(403).json({ message: "Not authorized to delete this flight" });
+            }
+            
             const result = await this._Flightrepo.DeleatFlight(id);
 
             if (!result) {
-                return res.status(404).json({ message: "Flight not found" });
+                return res.status(404).json({ message: "Delete failed" });
             }
 
             return res.status(200).json(result);
 
         } catch (err) {
             console.log(err.message);
+            return res.status(500).json({ message: "Failed to delete flight" });
         }
     }
 
@@ -85,7 +99,9 @@ export default class FlightController {
             const { id, flightName } = req.query;
             const flight = await this._Flightrepo.Search(id, flightName);
 
-            if (!flight) return res.status(404).json({ message: "Flight not found" });
+            if (!flight) {
+                return res.status(404).json({ message: "Flight not found" });
+            }
 
             return res.status(200).json(flight);
         } catch (err) {
@@ -99,11 +115,8 @@ export default class FlightController {
         try {
             const data = req.body;
 
-
             const seatId = await this._Flightrepo.AddSets(data);
-
-
-            await this._Flightrepo.pushSEATS(data.flightId, seatId);
+            await this._Flightrepo.pushSEATS(data.flight, seatId);
 
             return res.status(201).json({
                 success: true,
@@ -113,8 +126,7 @@ export default class FlightController {
 
         } catch (error) {
             console.log(error.message);
-
+            return res.status(500).json({ message: "Failed to add seat" });
         }
     }
-
 }

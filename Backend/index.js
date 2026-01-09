@@ -1,6 +1,7 @@
 import express from "express";
 import userrouts from "./src/Users/user.routs.js";
 import FlightRouts from "./src/Flights_Management/flight.routs.js";
+import router from "./src/User_Management/user.management.routes.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -18,7 +19,7 @@ server.use(cors({
 // server.get("/",(req,res,next)=>res.status(200).send("Server is Created..."))
 server.use("/api/user",userrouts);
 server.use("/api/flights",FlightRouts);
-
+server.use("/api/user-management",router)
 
 server.use((req, res, next) => {
   res.status(404).send(`
