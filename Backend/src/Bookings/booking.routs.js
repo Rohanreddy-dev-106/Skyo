@@ -5,7 +5,7 @@ import AccessControl from "../middlewares/access.control.js";
 const bookingrouts = express.Router();
 
 //Booking rout
-bookingControler = new BookingFlights();
+const bookingControler = new BookingFlights();
 bookingrouts.post("/booking", jwtAuth, AccessControl("users", "admin"), (req, res, next) => {
 bookingControler.CreateBooking(req,res,next);
 })

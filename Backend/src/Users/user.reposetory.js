@@ -43,6 +43,44 @@ export default class Users {
         }
     }
 
+    //refreshtoken set
+    async StoreRefreshToken(id, token) {
+        try {
+            const refreshT = await users.findByIdAndUpdate(id, { $set: { refreshToken: token } }, { new: true });
+            return refreshT;
+        } catch (error) {
+            console.log(error.message);
+
+        }
+    }
+    async GetRefreshToken(id) {
+        try {
+            const docfind = await users.findById(id);
+            return docfind.refreshToken;
+        } catch (error) {
+            console.log(error.message);
+
+        }
+    }
+    async FindUser(id) {
+        try {
+            return await users.findById(id);
+        }
+        catch (err) {
+            console.log(err.message);
+
+        }
+    }
+    async clearToken(id) {
+        try {
+            return await users.findByIdAndUpdate(id, { $set: { refreshToken: "NULL" } })
+        }
+        catch (err) {
+            console.log(err.message);
+
+        }
+    }
+
     //Admin/Users Level api
 
     async Getallusers(roll) {

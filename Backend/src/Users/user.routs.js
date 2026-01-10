@@ -21,13 +21,17 @@ userrouts.post("/otp-send", (req, res, next) => {
     SendOtp(req, res, next);
 });
 
-userrouts.post("/otp-verify", VerifyOtp, (req, res) => {
+userrouts.post("/otp-verify", VerifyOtp, (req, res,next) => {
     res.status(200).json({
         message: "Email verified successfully"
     });
 });
-userrouts.put("/profile-update", jwtAuth, AccessControl("users", "admin"), (req, res) => {
+userrouts.put("/profile-update", jwtAuth, AccessControl("users", "admin"), (req, res,next) => {
     Controller.Profileupdate(req, res, next);
 });
+
+userrouts.post("/refresh-token",(req,res,next)=>{
+    Controller.RefreshToken(req,res,next);
+})
 
 export default userrouts;
