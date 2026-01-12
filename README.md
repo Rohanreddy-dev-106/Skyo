@@ -11,7 +11,7 @@
     <td>
       <h1>Skyo</h1>
       <p>
-        A scalable and secure backend system for a Flight Booking Application
+       A scalable and secure backend system for a flight booking application, built with Node.js, Express, and MongoDB. It features JWT-based authentication, OTP email verification, advanced flight filtering, and robust booking management, with more enhancements coming soon.
       </p>
     </td>
   </tr>
@@ -117,10 +117,12 @@ Server will run at: `http://localhost:5000`
 
 ## 🔮 Future Enhancements
 
-* Seat selection UI support
-* Flight cancellation & refunds UI
-* Admin analytics dashboard UI
-* Payment gateway integration
+* React-based frontend for end-to-end user experience
+* Interactive seat selection interface
+* Flight cancellation and refund management workflows
+* Admin analytics dashboard with visual insights
+* Secure payment gateway integration
+
 
 ---
 
@@ -135,3 +137,4 @@ GitHub: [https://github.com/Rohanreddy-dev-106](https://github.com/Rohanreddy-de
 ---
 
 ⭐ If you like this project, give it a star and feel free to fork it!
+
