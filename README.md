@@ -6,8 +6,8 @@
           src="Logo.png"
           alt="Skyo Logo"
           style="
-            width:100%;
-            height:100%;
+            width:200%;
+            height:200%;
             object-fit:cover;
             display:block;
           "
@@ -145,6 +145,7 @@ GitHub: [https://github.com/Rohanreddy-dev-106](https://github.com/Rohanreddy-de
 ---
 
 ⭐ If you like this project, give it a star and feel free to fork it!
+
 
 
 
