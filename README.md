@@ -1,8 +1,18 @@
-﻿# ✈️ Flight Booking Application (Backend)
+﻿<p align="center">
+  <img 
+    src="Skyo.png"
+    alt="Skyo Logo"
+    width="140"
+    style="border-radius: 50%;"
+  />
+</p>
 
-A **scalable and secure backend system** for a Flight Booking Application built using **Node.js, Express, and MongoDB**. This project focuses on clean architecture, modular design, and real-world backend features like authentication, flight management, filtering, and bookings.
+<h1 align="center"> Skyo</h1>
 
----
+<p align="center">
+  A scalable and secure backend system for a Flight Booking Application
+</p>
+
 
 ## 🚀 Features
 
