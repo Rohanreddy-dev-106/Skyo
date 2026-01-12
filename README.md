@@ -2,7 +2,7 @@
   <tr>
     <td width="160">
       <img 
-        src="Skyo.png"
+        src="Logo.png"
         alt="Skyo Logo"
         width="140"
         style="border-radius: 50%;"
