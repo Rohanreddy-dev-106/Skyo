@@ -1,21 +1,25 @@
 <table>
   <tr>
-    <td width="160">
+    <td width="260">
       <img 
         src="Logo.png"
         alt="Skyo Logo"
-        width="140"
-        style="border-radius: 50%;"
+        width="250"
+        height="350"
       />
     </td>
     <td>
       <h1>Skyo</h1>
       <p>
-       A scalable and secure backend system for a flight booking application, built with Node.js, Express, and MongoDB. It features JWT-based authentication, OTP email verification, advanced flight filtering, and robust booking management, with more enhancements coming soon.
+        A scalable and secure backend system for a flight booking application,
+        built with Node.js, Express, and MongoDB. It features JWT-based
+        authentication, OTP email verification, advanced flight filtering,
+        and robust booking management, with more enhancements coming soon.
       </p>
     </td>
   </tr>
 </table>
+
 
 ---
 
@@ -137,4 +141,5 @@ GitHub: [https://github.com/Rohanreddy-dev-106](https://github.com/Rohanreddy-de
 ---
 
 ⭐ If you like this project, give it a star and feel free to fork it!
+
 
