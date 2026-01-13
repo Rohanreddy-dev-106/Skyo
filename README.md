@@ -1,12 +1,18 @@
 <table>
   <tr>
-    <td width="260">
-      <img 
-        src="Logo.png"
-        alt="Skyo Logo"
-        width="250"
-        height="350"
-      />
+    <td>
+      <div style="width:150px; height:150px; overflow:hidden;">
+        <img 
+          src="Logo.png"
+          alt="Skyo Logo"
+          style="
+            width:200%;
+            height:200%;
+            object-fit:cover;
+            display:block;
+          "
+        />
+      </div>
     </td>
     <td>
       <h1>Skyo</h1>
@@ -20,9 +26,7 @@
   </tr>
 </table>
 
-
 ---
-
 ## 🚀 Features
 
 ### 🔐 Authentication & Authorization
@@ -141,5 +145,7 @@ GitHub: [https://github.com/Rohanreddy-dev-106](https://github.com/Rohanreddy-de
 ---
 
 ⭐ If you like this project, give it a star and feel free to fork it!
+
+
 
 
