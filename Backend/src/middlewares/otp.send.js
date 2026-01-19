@@ -10,7 +10,7 @@ async function SendOtp(req, res, next) {
             return res.status(400).send("Email is required");
         }
 
-        //OTP generation moved here
+        
         const otp = crypto.randomInt(100000, 1000000).toString();
 
         // Store OTP in Redis 
