@@ -9,7 +9,8 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const server=express();
-server.use(express.json())
+server.use(express.json())//Postman
+server.use(express.urlencoded({ extended: true }));//Data comming from HTML forms
 server.use(cookieParser())
 server.use(cors({
     origin: "*" // allow all origins
